@@ -139,6 +139,7 @@ function installShims ({ modules, overwrite }, done) {
     var modPath = path.resolve('./node_modules/' + name)
     return function (cb) {
       fs.exists(modPath, function (exists) {
+        console.log(`##### name:${name} exists:${exists}`);
         if (!exists) return cb()
 
         var install = true
@@ -177,6 +178,7 @@ function installShims ({ modules, overwrite }, done) {
           } else {
             var existingVerNpm5 = (/\-([^\-]+)\.tgz/.exec(pkgJson.version) || [null, null])[1]
             var existingVer = existingVerNpm5 || pkgJson.version
+            console.log({name: pkgJson.name, existingVerNpm5, existingVer});
             if (semver.satisfies(existingVer, allShims[name])) {
               install = false
             }
